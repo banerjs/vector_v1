@@ -4,9 +4,6 @@
     <group if="$(optenv VECTOR_HAS_KINECT_PAN_TILT false)">
         <machine name="vector2" address="vector2" user="vector"
             env-loader="/home/vector/env.sh" />
-        <machine name="vector3" address="vector3" user="vector"
-            env-loader="/home/vector/env.sh" />
-
 
         <!-- Vector 2 utilties bringup -->
         <include file="$(find vector_bringup)/launch/vector2/utilities/utilities_bringup.launch">
@@ -30,10 +27,12 @@
             name="pan_tilt_homing" output="screen"/>
 
         <!-- Kinect 2 Sensor bringup -->
+	<!--
         <include file="$(find vector_bringup)/launch/vector2/kinect2/kinect2_bridge.launch">
             <arg name="machine" value="vector3"/>
             <arg name="calib_path" value="/home/vector/vector_ws/src/vector_v1/vector_common/vector_third_party/iai_kinect2/kinect2_bridge/data/"/>
         </include>
+	-->
     </group>
 
 </launch>
