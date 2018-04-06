@@ -1,5 +1,5 @@
 
-# Set this to whatever physical port you are using to communicate externally 
+# Set this to whatever physical port you are using to communicate externally
 # (eg. eth0, eth1, wlan0,...etc)
 
 # Uncomment if vector2
