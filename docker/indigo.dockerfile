@@ -14,6 +14,9 @@ ENV HLPR_USER=${HLPR_USER:-hlpr} \
 # Install the prerequisite files from apt-get
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
+        software-properties-common \
+        python-software-properties && \
+    apt-get install -y --no-install-recommends \
         ros-indigo-desktop-full \
         ros-indigo-control-toolbox \
         ros-indigo-moveit-core \
@@ -37,10 +40,16 @@ RUN apt-get update && \
         rsync \
         libturbojpeg \
         libjpeg-turbo8-dev \
-        pkg-config
+        pkg-config \
+        xvfb \
+        x11-utils \
+        x11-xserver-utils \
+        xserver-xorg-video-dummy \
+        xpra \
+        mesa-utils
 
 # Change the user
-RUN useradd -r -m -U -G sudo ${HLPR_USER} && \
+RUN useradd -r -m -U -G sudo,tty,video,dialout ${HLPR_USER} && \
     echo "ALL   ALL = (ALL) NOPASSWD: ALL" >> /etc/sudoers && \
     mkdir -p $WORKSPACE_DIR /home/$HLPR_USER/software && \
     chown -R $HLPR_USER:$HLPR_USER $WORKSPACE_DIR && \
@@ -53,6 +62,10 @@ RUN cd $HOME/software && \
     cd libfreenect2 && cd depends && ./download_debs_trusty.sh && \
     sudo dpkg -i debs/libusb*deb && \
     sudo dpkg -i debs/libglfw3*deb && sudo apt-get install -f && \
+    sudo apt-add-repository -y ppa:floe/beignet && \
+        sudo apt-get update && \
+        sudo apt-get install -y beignet-dev && \
+        sudo dpkg -i debs/ocl-icd*deb && \
     cd .. && mkdir build && cd build && \
     cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/software/freenect2 -Dfreenect2_DIR=$HOME/software/freenect2/lib/cmake/freenect2 -DENABLE_CXX11=ON && \
     make && make install && \
