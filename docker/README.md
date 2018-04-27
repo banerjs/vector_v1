@@ -25,7 +25,8 @@ docker run -it --rm --privileged -v /dev/bus/usb:/dev/bus/usb hlp-r/vector_v1:in
 
 Need to install OpenCL for the NUC and configure docker to expose the Intel GPU:
 
-```vector@vector2:~/libfreenect2/build$ ./bin/Protonect -noviewer cl
+```
+vector@vector2:~/libfreenect2/build$ ./bin/Protonect -noviewer cl
 X11 connection rejected because of wrong authentication.
 Version: 0.2.0
 Environment variables: LOGFILE=<protonect.log>
@@ -87,4 +88,9 @@ The viewer is turned off. Received 100 frames. Ctrl-C to stop.
 [Info] [Freenect2DeviceImpl] closed
 [Info] [Freenect2DeviceImpl] closing...
 [Info] [Freenect2DeviceImpl] already closed, doing nothing
+```
+
+```
+sudo apt-get install clang libclang-3.4-dev libclang-dev libclang1 opencl-headers ocl-icd-dev && sudo dpkg -i libfreenect2/depends/debs/ocl-icd*deb && sudo update-alternatives --install /usr/bin/llvm-link llvm-link /usr/bin/llvm-link-3.4 34 &&
+sudo update-alternatives --install /usr/bin/llvm-as llvm-as /usr/bin/llvm-as-3.4 34 && sudo apt-get install clinfo
 ```

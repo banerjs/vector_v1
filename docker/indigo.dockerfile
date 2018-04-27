@@ -61,24 +61,24 @@ RUN cd $HOME/software && \
     git clone -b v0.2.0 https://github.com/OpenKinect/libfreenect2.git && \
     cd libfreenect2 && cd depends && ./download_debs_trusty.sh && \
     sudo dpkg -i debs/libusb*deb && \
-    sudo dpkg -i debs/libglfw3*deb && sudo apt-get install -f && \
-    sudo apt-add-repository -y ppa:floe/beignet && \
-        sudo apt-get update && \
-        sudo apt-get install -y beignet-dev && \
-        sudo dpkg -i debs/ocl-icd*deb && \
-    cd .. && mkdir build && cd build && \
-    cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/software/freenect2 -Dfreenect2_DIR=$HOME/software/freenect2/lib/cmake/freenect2 -DENABLE_CXX11=ON && \
-    make && make install && \
-    sudo cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/ && \
-    sudo ln -sf $HOME/software/freenect2/lib/cmake/freenect2/freenect2Config.cmake /usr/share/cmake-2.8/Modules/Findfreenect2.cmake
+    sudo dpkg -i debs/libglfw3*deb && sudo apt-get install -f
+    # sudo apt-add-repository -y ppa:floe/beignet && \
+    #     sudo apt-get update && \
+    #     sudo apt-get install -y beignet-dev && \
+    #     sudo dpkg -i debs/ocl-icd*deb && \
+    # cd .. && mkdir build && cd build && \
+    # cmake .. -DCMAKE_INSTALL_PREFIX=$HOME/software/freenect2 -Dfreenect2_DIR=$HOME/software/freenect2/lib/cmake/freenect2 -DENABLE_CXX11=ON && \
+    # make && make install && \
+    # sudo cp ../platform/linux/udev/90-kinect2.rules /etc/udev/rules.d/ && \
+    # sudo ln -sf $HOME/software/freenect2/lib/cmake/freenect2/freenect2Config.cmake /usr/share/cmake-2.8/Modules/Findfreenect2.cmake
 
 # Clone and build the repository
-COPY . $REPOSITORY_DIR
-RUN cd $WORKSPACE_DIR && mkdir src && cd src && \
-    . /opt/ros/indigo/setup.sh && catkin_init_workspace && \
-    cd .. && ln -sf $REPOSITORY_DIR src/ && \
-    catkin_make && \
-    sudo cp src/vector_v1/docker/utils/hector_pose_estimation_nodelets.fix.xml /opt/ros/indigo/share/hector_pose_estimation/hector_pose_estimation_nodelets.xml
+# COPY . $REPOSITORY_DIR
+# RUN cd $WORKSPACE_DIR && mkdir src && cd src && \
+#     . /opt/ros/indigo/setup.sh && catkin_init_workspace && \
+#     cd .. && ln -sf $REPOSITORY_DIR src/ && \
+#     catkin_make && \
+#     sudo cp src/vector_v1/docker/utils/hector_pose_estimation_nodelets.fix.xml /opt/ros/indigo/share/hector_pose_estimation/hector_pose_estimation_nodelets.xml
 
 # Set the work directory
 WORKDIR $WORKSPACE_DIR
